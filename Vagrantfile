@@ -96,10 +96,15 @@ Vagrant.configure("2") do |config|
   # HTTP instead of HTTPS depending on your configuration. Also change the
   # validation key to validation.pem.
   #
-  # config.vm.provision :chef_client do |chef|
-  #   chef.chef_server_url = "https://api.opscode.com/organizations/psegarel"
-  #   chef.validation_key_path = ".chef/psegarel-validator.pem"
-  # end
+  config.vm.provision :chef_client do |chef|
+    chef.chef_server_url = "https://api.opscode.com/organizations/psegarel"
+    chef.validation_key_path = ".chef/psegarel-validator.pem"
+
+    chef.environment = "dev" 
+    chef.add_role("base")
+    chef.add_role("db_master")
+    chef.add_role("webserver")
+  end
   #
   # If you're using the Opscode platform, your validator client is
   # ORGNAME-validator, replacing ORGNAME with your organization name.
